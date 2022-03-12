@@ -5,6 +5,9 @@ import hello.proxy.pureproxy.proxy.code.ProxyPatternClient;
 import hello.proxy.pureproxy.proxy.code.RealSubject;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class ProxyPatternTest {
     @Test
     void noProxyTest() {
@@ -25,5 +28,7 @@ class ProxyPatternTest {
         client.execute();
         client.execute();
         client.execute();
+
+        List<Integer> l = new ArrayList<>();
     }
 }
