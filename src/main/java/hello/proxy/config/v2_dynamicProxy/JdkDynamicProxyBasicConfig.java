@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.lang.reflect.Proxy;
 
 @Configuration
-public class JdkDynamicProxyConfig {
+public class JdkDynamicProxyBasicConfig {
     @Bean
     public OrderControllerV1 orderControllerV1(LogTrace logTrace) {
         OrderControllerV1 orderControllerV1 = new OrderControllerV1Impl(orderServiceV1(logTrace));
