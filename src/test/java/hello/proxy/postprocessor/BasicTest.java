@@ -3,7 +3,9 @@ package hello.proxy.postprocessor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,22 +15,26 @@ public class BasicTest {
     @Test
     void basicConfig() {
         AnnotationConfigApplicationContext applicationContext
-                = new AnnotationConfigApplicationContext(BasicConfig.class);
+                = new AnnotationConfigApplicationContext(BeanPostProcessorConfig.class);
 
-        A beanA = applicationContext.getBean("beanA", A.class);
-        beanA.hello();
+        B b = applicationContext.getBean("beanA", B.class);
+        b.hello();
 
         Assertions.assertThrows(NoSuchBeanDefinitionException.class,
-                () -> applicationContext.getBean("beanB", B.class));
+                () -> applicationContext.getBean(A.class));
     }
 
     @Configuration
-    static class BasicConfig {
+    static class BeanPostProcessorConfig {
         @Bean(name = "beanA")
         public A a() {
             return new A();
         }
 
+        @Bean
+        public BeanPostProcessor beanPostProcessor() {
+            return new AToBPostProcessor();
+        }
     }
 
     static class A {
@@ -40,6 +46,18 @@ public class BasicTest {
     static class B {
         public void hello() {
             log.info("hello B");
+        }
+    }
+
+    static class AToBPostProcessor implements BeanPostProcessor {
+        @Override
+        public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+            log.info("bean : {}, beanName : {}", bean, beanName);
+
+            if (bean instanceof A) {
+                return new B();
+            }
+            return bean;
         }
     }
 }
