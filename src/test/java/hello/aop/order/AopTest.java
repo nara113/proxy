@@ -1,8 +1,8 @@
 package hello.aop.order;
 
-import hello.aop.order.aop.AspectV2;
-import hello.aop.order.aop.AspectV3;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import hello.aop.order.aop.AspectV4;
+import hello.aop.order.aop.AspectV5;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 
 @Slf4j
 @SpringBootTest
-@Import(AspectV4.class)
+@Import({AspectV5.LogAspect.class, AspectV5.TxAspect.class})
 class AopTest {
 
     @Autowired
