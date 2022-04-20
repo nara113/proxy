@@ -79,4 +79,52 @@ public class ExecutionTest {
         pointcut.setExpression("execution(* hello.aop..*.*(..))");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
+
+    @Test
+    void typeMatch() {
+        pointcut.setExpression("execution(* hello.aop.member.MemberService.*(..))");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class))
+                .isTrue();
+    }
+
+    @Test
+    void typeMatchInternal() throws NoSuchMethodException {
+        pointcut.setExpression("execution(* hello.aop.member.MemberService.*(..))");
+        Method internalMethod =
+                MemberServiceImpl.class.getMethod("internal", String.class);
+
+        Assertions.assertThat(pointcut.matches(internalMethod, MemberServiceImpl.class))
+                .isFalse();
+    }
+
+    @Test
+    void argsMatch() {
+        pointcut.setExpression("execution(* *(String))");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class))
+                .isTrue();
+    }
+
+    @Test
+    void noArgsMatch() {
+        // 파라미터가 없어야 함
+        pointcut.setExpression("execution(* *())");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class))
+                .isFalse();
+    }
+
+    @Test
+    void argsMatchStar() {
+        //정확히 하나의 파라미터 허용
+        pointcut.setExpression("execution(* *(*))");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class))
+                .isTrue();
+    }
+
+    @Test
+    void argsMatchComplex() {
+        //갯수 무관하게 String으로 시작하는 파라미터 허용
+        pointcut.setExpression("execution(* *(String, ..))");
+        Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class))
+                .isTrue();
+    }
 }
