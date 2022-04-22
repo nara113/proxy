@@ -8,6 +8,8 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 
 import java.lang.reflect.Method;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class ArgsTest {
     Method helloMethod;
 
@@ -24,35 +26,35 @@ public class ArgsTest {
 
     @Test
     void args() {
-        Assertions.assertThat(pointcut("args(String)")
+        assertThat(pointcut("args(String)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("args(Object)")
+        assertThat(pointcut("args(Object)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("args(java.io.Serializable)")
+        assertThat(pointcut("args(java.io.Serializable)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("args()")
+        assertThat(pointcut("args()")
                 .matches(helloMethod, MemberServiceImpl.class)).isFalse();
 
-        Assertions.assertThat(pointcut("args(*)")
+        assertThat(pointcut("args(*)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("args(..)")
+        assertThat(pointcut("args(..)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("args(String, ..)")
+        assertThat(pointcut("args(String, ..)")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
         // VS execution
-        Assertions.assertThat(pointcut("execution(* *(String))")
+        assertThat(pointcut("execution(* *(String))")
                 .matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        Assertions.assertThat(pointcut("execution(* *(Object))")
+        assertThat(pointcut("execution(* *(Object))")
                 .matches(helloMethod, MemberServiceImpl.class)).isFalse();
 
-        Assertions.assertThat(pointcut("execution(* *(java.io.Serializable))")
+        assertThat(pointcut("execution(* *(java.io.Serializable))")
                 .matches(helloMethod, MemberServiceImpl.class)).isFalse();
     }
 }
