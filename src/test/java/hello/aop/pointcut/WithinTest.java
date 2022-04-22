@@ -3,6 +3,7 @@ package hello.aop.pointcut;
 import hello.aop.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 
@@ -24,6 +25,7 @@ public class WithinTest {
                 .isTrue();
     }
 
+    @DisplayName("within은 부모타입 사용 안됨")
     @Test
     void withinFalse() {
         pointcut.setExpression("within(hello.aop.member.MemberService)");
