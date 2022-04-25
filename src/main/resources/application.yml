@@ -1,0 +1,4 @@
+#spring:
+#  aop:
+#    proxy-target-class: false
+#    true는 cglib (default), false는 jdk 동적 프록 (인터페이스 없으면 cglib)
