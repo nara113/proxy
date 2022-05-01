@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.Aspect;
 @Slf4j
 @Aspect
 public class RetryAspect {
-
 //    @Around("@annotation(hello.aop.exam.annotation.Retry)")
     @Around("@annotation(retry)")
     public Object doRetry(ProceedingJoinPoint joinPoint, Retry retry) throws Throwable {
@@ -26,7 +25,6 @@ public class RetryAspect {
             } catch (Exception e) {
                 exceptionHolder = e;
             }
-
         }
         throw exceptionHolder;
     }
