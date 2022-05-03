@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class CallServiceV3 {
-
     private final InternalService internalService;
 
     public void external() {
         internalService.internal();
     }
-
 }
