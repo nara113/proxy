@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 
-public class ProxyCastingTest {
+class ProxyCastingTest {
     @Test
     void jdkProxy() {
         MemberServiceImpl target = new MemberServiceImpl();
